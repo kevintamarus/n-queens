@@ -159,17 +159,28 @@
           }
         }
       } else {
-        for (var m = 0; m < this.get('n'); m++) {
-          if (this.get(m)[majorDiagonalColumnIndexAtFirstRow] === 1) {
-            // loop through rest of board to find diagonals
-            for (var i = m; i < this.get('n'); i++) {
-              // if space (which should be diagonal) has queen
-              if (this.get(i)[majorDiagonalColumnIndexAtFirstRow + i] === 1) {
-                // increment counter
-                counter++;
-                if (counter > 1) {
-                  return true;
-                }
+        // for (var m = 0; m < this.get('n'); m++) {
+        //   if (this.get(m)[majorDiagonalColumnIndexAtFirstRow] === 1) {
+        //     // loop through rest of board to find diagonals
+        //     for (var i = m; i < this.get('n'); i++) {
+        //       // if space (which should be diagonal) has queen
+        //       if (this.get(i)[majorDiagonalColumnIndexAtFirstRow + i] === 1) {
+        //         // increment counter
+        //         counter++;
+        //         if (counter > 1) {
+        //           return true;
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
+
+        for (var a = 0; a < this.get('n'); a++) {
+          if (this.get(majorDiagonalColumnIndexAtFirstRow + a)) {
+            if (this.get(a)[majorDiagonalColumnIndexAtFirstRow + a] === 1) {
+              counter++;
+              if (counter > 1) {
+                return true;
               }
             }
           }
