@@ -78,12 +78,30 @@
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
+    
+    //we can easily optimize, will come back
     hasRowConflictAt: function(rowIndex) {
+      // iterate across row -- if conflict, return true
+      var counter = 0;
+      for(var i = 0; i < this.get(rowIndex).length; i++) {
+        if (this.get(rowIndex)[i] === 1) {
+          counter++;
+        }
+      }
+      if(counter > 1) {
+        return true;
+      }
       return false; // fixme
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      for(var i = 0; i < this.get('n'); i++) {
+        if (this.hasRowConflictAt(i)) {
+          return true;
+        }
+      }
+      
       return false; // fixme
     },
 
@@ -94,11 +112,28 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      var counter = 0;
+      for (var i = 0; i < this.get('n'); i++) {
+        if (this.get(i)[colIndex] === 1) {
+          counter++;
+        }
+      }
+
+      if (counter > 1) {
+        return true;
+      }
+      
       return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      for (var p = 0; p < this.get(0).length; p++) {
+        if (this.hasColConflictAt(p)) {
+          return true;
+        }
+      }
+
       return false; // fixme
     },
 
@@ -109,11 +144,38 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      var counter = 0;
+      var location = this.get(majorDiagonalColumnIndexAtFirstRow);
+
+      // BRUTE FORCE - LOOP THROUGH ROWS UNTIL FINDING A 1 TO START DIAGONAL SEARCH AT
+
+      if (location) {
+        for (var i = 0; i < this.get('n'); i++) {
+          if (this.get(location + i) <= this.get('n')) {
+            if (this.get(location + i)[i] === 1) {
+              counter++;
+            }
+          }
+        }
+      }
+
+      if (counter > 1) {
+        return true;
+      }
+      
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      for (var i = 0; i < this.get('n'); i++) {
+        for (var p = 0; p < this.get(i).length; p++) {
+          if (this.hasMajorDiagonalConflictAt(p)) {
+            return true;
+          }
+        }
+      }
+
       return false; // fixme
     },
 
