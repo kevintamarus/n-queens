@@ -159,22 +159,6 @@
           }
         }
       } else {
-        // for (var m = 0; m < this.get('n'); m++) {
-        //   if (this.get(m)[majorDiagonalColumnIndexAtFirstRow] === 1) {
-        //     // loop through rest of board to find diagonals
-        //     for (var i = m; i < this.get('n'); i++) {
-        //       // if space (which should be diagonal) has queen
-        //       if (this.get(i)[majorDiagonalColumnIndexAtFirstRow + i] === 1) {
-        //         // increment counter
-        //         counter++;
-        //         if (counter > 1) {
-        //           return true;
-        //         }
-        //       }
-        //     }
-        //   }
-        // }
-
         for (var a = 0; a < this.get('n'); a++) {
           if (this.get(majorDiagonalColumnIndexAtFirstRow + a)) {
             if (this.get(a)[majorDiagonalColumnIndexAtFirstRow + a] === 1) {
@@ -193,11 +177,9 @@
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      for (var i = 0; i < this.get('n'); i++) {
-        for (var p = 0; p < this.get(i).length; p++) {
-          if (this.hasMajorDiagonalConflictAt(p)) {
-            return true;
-          }
+      for (var i = -(this.get(0).length); i < this.get(0).length; i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
         }
       }
 
