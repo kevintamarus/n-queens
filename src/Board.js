@@ -146,15 +146,11 @@
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       var counter = 0;
 
-      // loop through length of board
-      for (var m = 0; m < this.get('n'); m++) {
-        // if current space has queen
-        if (this.get(m)[majorDiagonalColumnIndexAtFirstRow] === 1) {
-          // loop through rest of board to find diagonals
-          for (var i = m; i < this.get('n'); i++) {
-            // if space (which should be diagonal) has queen
-            if (this.get(i)[majorDiagonalColumnIndexAtFirstRow + i] === 1) {
-              // increment counter
+      if (majorDiagonalColumnIndexAtFirstRow < 0) {
+        var absRow = Math.abs(majorDiagonalColumnIndexAtFirstRow);
+        for (var a = 0; a < this.get('n'); a++) {
+          if (this.get(absRow + a)) {
+            if (this.get(absRow + a)[a] === 1) {
               counter++;
               if (counter > 1) {
                 return true;
@@ -162,7 +158,24 @@
             }
           }
         }
+      } else {
+        for (var m = 0; m < this.get('n'); m++) {
+          if (this.get(m)[majorDiagonalColumnIndexAtFirstRow] === 1) {
+            // loop through rest of board to find diagonals
+            for (var i = m; i < this.get('n'); i++) {
+              // if space (which should be diagonal) has queen
+              if (this.get(i)[majorDiagonalColumnIndexAtFirstRow + i] === 1) {
+                // increment counter
+                counter++;
+                if (counter > 1) {
+                  return true;
+                }
+              }
+            }
+          }
+        }
       }
+      
       
       return false; // fixme
     },
