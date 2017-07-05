@@ -145,22 +145,23 @@
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       var counter = 0;
-      var location = this.get(majorDiagonalColumnIndexAtFirstRow);
 
-      // BRUTE FORCE - LOOP THROUGH ROWS UNTIL FINDING A 1 TO START DIAGONAL SEARCH AT
-
-      if (location) {
-        for (var i = 0; i < this.get('n'); i++) {
-          if (this.get(location + i) <= this.get('n')) {
-            if (this.get(location + i)[i] === 1) {
+      // loop through length of board
+      for (var m = 0; m < this.get('n'); m++) {
+        // if current space has queen
+        if (this.get(m)[majorDiagonalColumnIndexAtFirstRow] === 1) {
+          // loop through rest of board to find diagonals
+          for (var i = m; i < this.get('n'); i++) {
+            // if space (which should be diagonal) has queen
+            if (this.get(i)[majorDiagonalColumnIndexAtFirstRow + i] === 1) {
+              // increment counter
               counter++;
+              if (counter > 1) {
+                return true;
+              }
             }
           }
         }
-      }
-
-      if (counter > 1) {
-        return true;
       }
       
       return false; // fixme
