@@ -14,14 +14,19 @@
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 
 //helper function
-window.generalLoop = function(n, x, board) {
-  
+window.generalLoop = function(n, y, board) {
+  for (var i = 0; i < board.get('n'); i++) {
+    board.togglePiece(i, y);
+    if (board.hasAnyRooksConflicts()) {
+      board.togglePiece(i, y);
+    }
+  }
 };
 
 
 window.findNRooksSolution = function(n) {
   var solution = [];
-  var board = new Board({n:n});
+  var board = new Board({n: n});
   
   
   ///2 for loops
@@ -47,7 +52,12 @@ window.findNRooksSolution = function(n) {
 window.countNRooksSolutions = function(n) {
   var solutionCount = 0; //fixme
   var board = new Board({n: n});
-  window.generalLoop(n, x, board);
+  
+  for (var i = 0; i < board.get('n'); i++) {
+    if (window.generalLoop(n, i, board)) {
+      solutionCount++; 
+    }
+  }
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
